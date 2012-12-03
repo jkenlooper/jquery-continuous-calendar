@@ -146,6 +146,19 @@ define(function(require) {
         expect(cal().find('.rangeLengthLabel')).toHaveText('0 Days')
       })
     })
+<<<<<<< HEAD
+=======
+
+    it('is cleared if a disabled date is inside the range', function() {
+      createCalendarFields({startDate: '4/29/2009', endDate: '5/5/2009'}).continuousCalendar({firstDate: '4/15/2009', lastDate: '5/12/2009', disabledDates: '4/22/2009'})
+      dragDatesSlowly(15, 29)
+      expect(cal().find('.selected').size()).toEqual(0)
+      expect(startFieldValue()).toEqual('')
+      expect(endFieldValue()).toEqual('')
+      expect(cal().find('.rangeLengthLabel')).toHaveText('0 Days')
+    })
+  })
+>>>>>>> Clear selection if it contains a disabled date
 
     describe('calendar events', function() {
       beforeEach(createCalendarContainer)

@@ -246,6 +246,8 @@ define(function(require) {
 
       function formatDate(date) { return date ? DateFormat.shortDateFormat(date, locale) : '' }
 
+      function setDateLabel(val) { $('span.startDateLabel', container).text(val) }
+
       function isRange() { return params.endField && params.endField.length > 0 }
     }
   }
