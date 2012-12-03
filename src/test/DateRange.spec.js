@@ -225,5 +225,35 @@ define(function(require) {
       return new DateRange(new DateTime(date1), new DateTime(date2))
     }
   })
+
+  describe('hasDisabledDate', function() {
+    it('returns true when a any of the given dates are inside the range', function() {
+      range = createRange('11/15/2012', '11/23/2012')
+      var disabledDates = {'Tue Nov 20 2012 00:00:00 GMT+0200 (EET)': true}
+      expect(range.hasDisabledDate(disabledDates)).toBe(true)
+    })
+  })
+
+  function assertHasCorrectHoursAndMinutes(range, hours, minutes) {
+    expect(range).toBeValidRange()
+    expect(range.hours()).toEqual(hours)
+    expect(range.minutes()).toEqual(minutes)
+  }
+
+  function resetRange() {
+    start = new DateTime('09/10/2009')
+    end = new DateTime('09/12/2009')
+    range = new DateRange(end, start)
+  }
+
+  function resetOuterRange() {
+    start = new DateTime('03/28/2011')
+    end = new DateTime('05/01/2011')
+    outerRange = new DateRange(start, end)
+  }
+
+  function createRange(date1, date2) {
+    return new DateRange(new DateTime(date1), new DateTime(date2))
+  }
 })
 

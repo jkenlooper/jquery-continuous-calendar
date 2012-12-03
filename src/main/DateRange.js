@@ -91,6 +91,15 @@ define(function(require) {
     return new DateRange(newStart, newEnd)
   }
 
+  DateRange.prototype.hasDisabledDate = function(disabledDates) {
+    for(var disabledDate in disabledDates) {
+      if(this.hasDate(new DateTime(disabledDate))) {
+        return true
+      }
+    }
+    return false
+  }
+
   DateRange.prototype.expandDaysTo = function(days) { return new DateRange(this.start, this.start.plusDays(days - 1)) }
 
   DateRange.prototype.hasValidSize = function(minimumDays) { return minimumDays < 0 || this.days() >= minimumDays }
