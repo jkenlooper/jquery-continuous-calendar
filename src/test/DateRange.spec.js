@@ -203,27 +203,6 @@ define(function(require) {
       })
     })
 
-    function assertHasCorrectHoursAndMinutes(range, hours, minutes) {
-      expect(range).toBeValidRange()
-      expect(range.hours()).toEqual(hours)
-      expect(range.minutes()).toEqual(minutes)
-    }
-
-    function resetRange() {
-      start = new DateTime('09/10/2009')
-      end = new DateTime('09/12/2009')
-      range = new DateRange(end, start)
-    }
-
-    function resetOuterRange() {
-      start = new DateTime('03/28/2011')
-      end = new DateTime('05/01/2011')
-      outerRange = new DateRange(start, end)
-    }
-
-    function createRange(date1, date2) {
-      return new DateRange(new DateTime(date1), new DateTime(date2))
-    }
   })
 
   describe('hasDisabledDate', function() {
