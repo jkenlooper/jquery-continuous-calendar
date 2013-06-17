@@ -4,11 +4,12 @@ define(function(require) {
   var DateFormat = require('../main/DateFormat')
   var DateLocale = require('../main/DateLocale')
 
+  var range
+  var start
+  var end
+  var outerRange
+
   describe('DateRange', function() {
-    var range
-    var start
-    var end
-    var outerRange
 
     describe('date range default behavior', function() {
       beforeEach(resetRange)
