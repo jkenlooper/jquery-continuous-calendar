@@ -100,6 +100,15 @@ define(function(require) {
     return false
   }
 
+  DateRange.prototype.hasSkippedDate = function(skippedDates) {
+    for(var skippedDate in skippedDates) {
+      skippedDate = new DateTime(skippedDate)
+      if(this.start.getOnlyDate() == skippedDate) { return true }
+      if(this.end.getOnlyDate() == skippedDate) { return true }
+    }
+    return false
+  }
+
   DateRange.prototype.expandDaysTo = function(days) { return new DateRange(this.start, this.start.plusDays(days - 1)) }
 
   DateRange.prototype.hasValidSize = function(minimumDays) { return minimumDays < 0 || this.days() >= minimumDays }
@@ -154,8 +163,8 @@ define(function(require) {
     ].join(' ')
   }
 
-  DateRange.prototype.isPermittedRange = function(minimumSize, disableWeekends, outerRange) {
-    return this.hasValidSize(minimumSize) && (!(disableWeekends && this.hasEndsOnWeekend())) && this.isInside(outerRange)
+  DateRange.prototype.isPermittedRange = function(minimumSize, disableWeekends, outerRange, skippedDates) {
+    return this.hasValidSize(minimumSize) && (!(disableWeekends && this.hasEndsOnWeekend())) && this.isInside(outerRange) && !(skippedDates && this.hasSkippedDate(skippedDates))
   }
 
   DateRange.prototype.shiftInside = function(outerRange) {

@@ -5,7 +5,7 @@ define(function(require) {
   var DateTime = require('./DateTime')
 
   return function(container, calendarBody, executeCallback, locale, params, getElemDate, calendar, startDate,
-                  endDate, calendarRange, setStartField, setEndField, formatDate, disabledDatesList) {
+                  endDate, calendarRange, setStartField, setEndField, formatDate, disabledDatesList, skippedDatesList) {
     var mouseDownDate = null
     var selection
     var oldSelection
@@ -150,7 +150,7 @@ define(function(require) {
       drawSelection()
     }
 
-    function isPermittedRange(newSelection) { return newSelection.isPermittedRange(params.minimumRange, params.disableWeekends, calendarRange) }
+    function isPermittedRange(newSelection) { return newSelection.isPermittedRange(params.minimumRange, params.disableWeekends, calendarRange, params.skippedDates) }
 
     function mouseUp() {
       status = Status.NONE
@@ -165,6 +165,7 @@ define(function(require) {
       }
       return false
     }
+
 
     function drawSelection() {
       selection = DateRange.rangeWithMinimumSize(selection, params.minimumRange, params.disableWeekends, calendarRange)

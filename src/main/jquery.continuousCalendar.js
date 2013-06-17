@@ -28,6 +28,7 @@ define(function(require) {
         locale         : DateLocale.EN,
         disableWeekends: false,
         disabledDates  : null,
+        skippedDates   : null,
         minimumRange   : -1,
         selectWeek     : false,
         fadeOutDuration: 0,
@@ -58,7 +59,9 @@ define(function(require) {
       var calendarBody = {}
       var calendarRange
       var disabledDatesList
+      var skippedDatesList
       var disabledDatesObject
+      var skippedDatesObject
 
       $(this).addClass('continuousCalendarContainer').addClass(params.theme).append('&nbsp;') //IE fix for popup version
       createCalendar()
@@ -66,6 +69,8 @@ define(function(require) {
       function createCalendar() {
         disabledDatesList = params.disabledDates ? params.disabledDates.split(' ') : []
         disabledDatesObject = params.disabledDates ? parseDisabledDates(disabledDatesList) : {}
+        skippedDatesList = params.skippedDates ? params.skippedDates.split(' ') : []
+        skippedDatesObject = params.skippedDates ? parseSkippedDates(skippedDatesList) : {}
         calendarRange = determineRangeToRenderFormParams(params)
         popupBehavior = popUpBehaviour(params.isPopup)
         dateBehavior = dateBehaviour(isRange())
@@ -84,7 +89,7 @@ define(function(require) {
         if(calendarBody.scrollContent) return
 
         calendarBody = $.extend(calendarBody, CalendarBody(calendarContainer, calendarRange, locale,
-          params.customScroll, params.disableWeekends, disabledDatesObject))
+          params.customScroll, params.disableWeekends, disabledDatesObject, skippedDatesObject))
         bindScrollEvent()
 
         popupBehavior.initState()
@@ -126,9 +131,15 @@ define(function(require) {
         return dateMap
       }
 
+      function parseSkippedDates(dates) {
+        var dateMap = {}
+        $.each(dates, function(index, date) { dateMap[DateFormat.parse(date).date] = true })
+        return dateMap
+      }
+
       function dateBehaviour(isRange) {
         var basicParams = [container, calendarBody, executeCallback, locale, params, getElemDate, popupBehavior, startDate]
-        var rangeParams = [endDate, calendarRange, setStartField, setEndField, formatDate, disabledDatesList]
+        var rangeParams = [endDate, calendarRange, setStartField, setEndField, formatDate, disabledDatesList, skippedDatesList]
         return isRange ? RangeEvents.apply(null, basicParams.concat(rangeParams)) : SingleDateEvents.apply(null, basicParams)
       }
 

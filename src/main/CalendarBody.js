@@ -3,7 +3,7 @@ define(function(require) {
   var DateFormat = require('./DateFormat')
   var DateTime = require('./DateTime')
 
-  return function(calendarContainer, calendarRange, locale, customScroll, disableWeekends, disabledDatesObject) {
+  return function(calendarContainer, calendarRange, locale, customScroll, disableWeekends, disabledDatesObject, skippedDatesObject) {
     var dateCellMap = {}
     var dateCellDates = []
 
@@ -107,8 +107,9 @@ define(function(require) {
     function disabledOrNot(date) {
       var disabledWeekendDay = disableWeekends && date.isWeekend()
       var disabledDay = disabledDatesObject[date.getOnlyDate().date]
+      var skippedDay = skippedDatesObject[date.getOnlyDate().date]
       var outOfBounds = !calendarRange.hasDate(date)
-      return outOfBounds || disabledWeekendDay || disabledDay ? 'disabled' : ''
+      return outOfBounds || disabledWeekendDay || skippedDay || disabledDay ? 'disabled' : ''
     }
 
     function todayStyle(date) { return date.isToday() ? 'today' : '' }

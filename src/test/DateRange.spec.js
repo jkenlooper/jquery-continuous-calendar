@@ -214,6 +214,27 @@ define(function(require) {
     })
   })
 
+  describe('hasSkippedDate', function() {
+    // TODO
+    it('returns true when range starts on a skipped date', function() {
+      range = createRange('11/15/2012', '11/23/2012')
+      var skippedDates = {'Tue Nov 15 2012 00:00:00 GMT+0200 (EET)': true}
+      expect(range.hasSkippedDate(skippedDates)).toBe(true)
+    })
+
+    it('returns true when range ends on a skipped date', function() {
+      range = createRange('11/15/2012', '11/23/2012')
+      var skippedDates = {'Tue Nov 23 2012 00:00:00 GMT+0200 (EET)': true}
+      expect(range.hasSkippedDate(skippedDates)).toBe(true)
+    })
+
+    it('returns false when range includes a skipped date but does not start or end on one', function() {
+      range = createRange('11/15/2012', '11/23/2012')
+      var skippedDates = {'Tue Nov 20 2012 00:00:00 GMT+0200 (EET)': true}
+      expect(range.hasSkippedDate(skippedDates)).toBe(false)
+    })
+  })
+
   function assertHasCorrectHoursAndMinutes(range, hours, minutes) {
     expect(range).toBeValidRange()
     expect(range.hours()).toEqual(hours)
